@@ -1,0 +1,75 @@
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      result: [],
+      query: ''
+    }
+    this.handleChange= this.handleChange.bind(this);
+    this.fetchingData= this.fetchingData.bind(this);
+}
+
+  handleChange(e) {
+    this.setState({query: e.target.value})
+  }
+  
+  fetchingData() {
+   // this.setState({result: this.state.query})
+    let resultArray = [];
+    if (this.state.query === ''){
+      this.setState({result: resultArray})
+    } else {
+    const url = 'https://en.wikipedia.org/w/api.php?action=opensearch&origin=*&search=' + this.state.query;
+    axios.get(url)
+    .then(res => 
+          this.setState({result: [res.data]}))
+   /*.then(res =>
+         resultArray.push({
+      title: res.data[1],
+      url: res.data[3]
+    })   
+         )*/
+    }
+    
+  }
+			
+  
+  
+  componentDidMount() { 
+
+      this.fetchingData()    
+
+    setTimeout(() => {}, 200);
+  }
+  
+  
+render() {
+  console.log(this.state.result);
+  return(
+  <div id="main">
+      <button id="random"><a href="https://en.wikipedia.org/wiki/Special:Random" target="_blank">Random article</a></button>
+      <input id="input" placeholder='search' value={this.state.query} onChange={this.handleChange}></input>
+      <button id="search" onClick={this.fetchingData}>Search</button>
+
+<div>
+    {this.state.result.map(function(item, index){
+      return(
+        <ul>
+          <li><a href={item[3][index]} target="_blank" key={index}>{item[1][index]}</a></li>
+          </ul>
+      )
+    })}
+      </div>
+     
+      
+  </div>
+  )
+}      
+  
+}
+
+
+
+ 
+  
+ReactDOM.render(<App />, document.getElementById('root'));
