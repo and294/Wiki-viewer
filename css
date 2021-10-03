@@ -1,0 +1,25 @@
+body{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#main{
+  background-color: #8BC6EC;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#random{
+  margin-bottom: 10px;
+  width: 100px;
+}
+
+#input{
+  width: 500px;
+}
+
+#search{
+  width: 100px
+}
